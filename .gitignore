@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+models/*
+!models/.gitkeep
+reports/*
+!reports/.gitkeep
+data/sst5_3class_*.csv
+.venv/
