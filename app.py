@@ -422,3 +422,4 @@ elif nav == "PDF Dossier":
     d1.download_button("⬇️ Download Cinema PDF Dossier", Path(pdf_path).read_bytes(), f"{slug}_dossier.pdf", "application/pdf", use_container_width=True)
     d2.download_button("⬇️ Download DOCX Report", Path(docx_path).read_bytes(), f"{slug}_dossier.docx", use_container_width=True)
 # Testing Jenkins Auto-Trigger CI/CD
+# Auto trigger test 
