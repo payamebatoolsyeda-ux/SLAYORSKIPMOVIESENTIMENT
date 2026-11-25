@@ -52,4 +52,5 @@ CSV with a `text` column (and optionally `movie`). See `data/sample_reviews.csv`
 - Aspect detection is keyword-based (transparent, easy to explain). A natural extension is a
   trained ABSA model.
 - Ideas for later: IMDB-50k as a larger RAG corpus, persisting FAISS indexes per movie, scraping/TMDB API.
-**CI/CD Status:** Automated testing active via Jenkins Pipeline.
+## CI/CD Status
+- Automated testing active via Jenkins Pipeline (`Jenkinsfile`), running `pytest -v` against `test_app.py` inside `.venv`.
