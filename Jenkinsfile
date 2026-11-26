@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR = '.venv'
+        DEPLOY_DIR = 'C:\\deploy\\SLAYORSKIPMOVIESENTIMENT'
     }
 
     stages {
@@ -20,7 +21,10 @@ pipeline {
             steps {
                 bat '''
                     "%VENV_DIR%\\Scripts\\python.exe" -m pip install --upgrade pip
-                    "%VENV_DIR%\\Scripts\\pip.exe" install -r requirements.txt pytest
+                    if exist requirements.txt (
+                        "%VENV_DIR%\\Scripts\\python.exe" -m pip install -r requirements.txt
+                    )
+                    "%VENV_DIR%\\Scripts\\python.exe" -m pip install pytest
                 '''
             }
         }
@@ -28,9 +32,25 @@ pipeline {
         stage('Run Pytest') {
             steps {
                 bat '''
-                    "%VENV_DIR%\\Scripts\\python.exe" -m pytest -v
+                    "%VENV_DIR%\\Scripts\\python.exe" -m pytest -v --junitxml=test-results.xml
                 '''
             }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat '''
+                    if not exist "%DEPLOY_DIR%" mkdir "%DEPLOY_DIR%"
+                    robocopy . "%DEPLOY_DIR%" /MIR /XD .git .venv __pycache__ .pytest_cache
+                    if %ERRORLEVEL% LEQ 7 exit /b 0
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'test-results.xml'
         }
     }
 }
