@@ -106,3 +106,5 @@ def test_global_rag_and_chatbot(monkeypatch):
     missing = answer_global_question("What do people think about Inception?", bundle)
     assert "not found in the database" in missing["answer"].lower()
     assert missing["citations"] == []
+def test_ci_pipeline_working():
+    assert 1 + 1 == 2
